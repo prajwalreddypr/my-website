@@ -1,17 +1,19 @@
-// Smooth Scrolling
-document.querySelectorAll('a').forEach(anchor => {
+// Smooth Scrolling for Internal Links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
+        e.preventDefault(); // Prevent default behavior only for internal links
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
     });
 });
 
 // Modal for Project Details
 function openModal(project) {
-    // Example project content (You can dynamically load these based on your project array)
     let projectDetails = {
         "project1": {
             title: "Project 1",
@@ -38,16 +40,11 @@ function validateForm() {
         alert("All fields are required!");
         return false;
     }
-
-    // Add additional validation logic here if needed
     return true;
 }
 
-
 // Get the navigation bar
 let navbar = document.querySelector('nav');
-
-// Variable to keep track of the last scroll position
 let lastScrollTop = 0;
 
 // Add an event listener for the scroll event
@@ -55,11 +52,9 @@ window.onscroll = function () {
     let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
 
     if (currentScroll > lastScrollTop) {
-        // User is scrolling down
         navbar.classList.add('hide-navbar');
     } else {
-        // User is scrolling up
         navbar.classList.remove('hide-navbar');
     }
     lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Avoid negative values
-}
+};
